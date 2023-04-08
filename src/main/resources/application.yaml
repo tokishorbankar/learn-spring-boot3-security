@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}
+  jpa:
+    database-platform: ${DB_DATABASE_PLATFORM}
+    database: ${DB_DATABASE}
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: 'create-drop'
+    show-sql: true
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
