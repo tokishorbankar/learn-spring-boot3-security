@@ -1,4 +1,4 @@
-package com.kb.learn.api.controller.module;
+package com.kb.learn.api.module;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

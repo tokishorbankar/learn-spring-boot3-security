@@ -1,8 +1,8 @@
 package com.kb.learn.api.controller;
 
 
-import com.kb.learn.api.controller.module.ApiResponseEntity;
-import com.kb.learn.api.controller.module.Student;
+import com.kb.learn.api.module.ApiResponseEntity;
+import com.kb.learn.api.module.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

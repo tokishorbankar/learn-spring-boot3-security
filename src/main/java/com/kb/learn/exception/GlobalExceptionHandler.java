@@ -1,6 +1,6 @@
 package com.kb.learn.exception;
 
-import com.kb.learn.api.controller.module.ApiResponseEntity;
+import com.kb.learn.api.module.ApiResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
