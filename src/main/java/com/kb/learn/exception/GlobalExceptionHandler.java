@@ -4,6 +4,7 @@ import com.kb.learn.api.module.ApiResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -73,6 +74,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+        problemDetail.setType(URI.create(getRequestedUri(request)));
+        addTimestamp(problemDetail);
+        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+    }
+
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
+        log.error(ERROR_MESSAGE, ex);
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
         return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());

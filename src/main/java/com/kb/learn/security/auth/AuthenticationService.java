@@ -11,10 +11,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Collection;
 
 
 @Service
@@ -35,9 +40,10 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(final @Valid RegisterRequest request) {
         log.debug(String.format("register {}", request));
-        if(isUserExist(request.getEmail()))
+        if (isUserExist(request.getEmail()))
             throw new RuntimeException(String.format("User %s account is already exists.", request.getEmail()));
         var user = User.builder().firstname(request.getFirstname()).lastname(request.getLastname()).email(request.getEmail()).password(passwordEncoder.encode(request.getPassword())).role(request.isAdmin() ? Role.ADMIN : Role.USER).build();
+        validateUserDetails(user);
         String jwtToken = getJwtToken(userRepository.save(user));
         return getAuthenticationResponse(jwtToken);
     }
@@ -54,10 +60,24 @@ public class AuthenticationService {
         return getAuthenticationResponse(jwtToken);
     }
 
-    private boolean isUserExist(final String email){
+    private boolean isUserExist(final String email) {
         return userRepository.existsByEmail(email);
     }
+
     private String getJwtToken(final User user) {
         return jwtService.generateJwtToken(user);
+    }
+
+    private void validateUserDetails(UserDetails user) {
+        Assert.hasText(user.getUsername(), "Username may not be empty or null");
+        validateAuthorities(user.getAuthorities());
+    }
+
+    private void validateAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        Assert.notNull(authorities, "Authorities list must not be null");
+        for (GrantedAuthority authority : authorities) {
+            Assert.notNull(authority, "Authorities list contains a null entry");
+            Assert.hasText(authority.getAuthority(), "getAuthority() method must return a non-empty string");
+        }
     }
 }

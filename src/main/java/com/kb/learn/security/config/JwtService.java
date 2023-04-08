@@ -24,10 +24,10 @@ public class JwtService {
     private String SECRET_KEY;
 
 
-    public <T> T extractClaim(final String jwtToken, final Function<Claims, T> claimsResolverFunction) {
+    public <T> T extractClaim(final String jwtToken, final Function<Claims, T> claimsResolver) {
         log.debug("Extracting claims from JWt token {}", jwtToken);
         final Claims claims = extractAllClaims(jwtToken);
-        return claimsResolverFunction.apply(claims);
+        return claimsResolver.apply(claims);
     }
 
     public String extractUsername(final String jwtToken) {
@@ -56,6 +56,12 @@ public class JwtService {
         log.debug("Validating JWT token for username  {}", userDetails.getUsername());
         final String username = extractUsername(jwtToken);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(jwtToken);
+    }
+
+    public boolean hasClaim(final String jwtToken, final String claim) {
+        log.debug("isClaim is exist into JWT token {}, Claim {}", jwtToken, claim);
+        final Claims claims = extractAllClaims(jwtToken);
+        return claims.get(claim) != null;
     }
 
     private boolean isTokenExpired(final String jwtToken) {
