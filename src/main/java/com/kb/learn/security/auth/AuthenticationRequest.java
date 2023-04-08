@@ -1,19 +1,18 @@
 package com.kb.learn.security.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 import org.springframework.lang.NonNull;
 
 @Data
 @Builder
 @AllArgsConstructor
+@ToString
 public class AuthenticationRequest {
 
-    @NonNull
+    @NotBlank(message = "Email is mandatory")
     private String email;
 
-    @NonNull
+    @NotBlank(message = "Password is mandatory")
     private String password;
 }
