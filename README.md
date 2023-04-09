@@ -16,13 +16,12 @@ Local MySQL = Docker + Docker Compose + MySQL Docker image + Adminer Docker imag
 
 On folder that contains `docker-compose.yml` type one of this.
 
+* non detach mode
 ```
-// non detach mode
 docker-compose up
 ```
-or
+* detach mode
 ```
-// detach mode
 docker-compose up -d
 ```
 
@@ -50,10 +49,10 @@ Is data that already created will gone? No, since in the Docker Compose file you
 
 ### How to connect to MySQL
 
-### Via Adminer
+#### Via Adminer
 Go to http://localhost:8080
 
-### Via command line
+#### Via command line
 Make sure you have MySQL client installed and `mysql` command in CLI available.
 
 ```
