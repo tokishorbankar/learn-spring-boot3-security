@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationRestController {
     private final UserService userService;
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest request) {
-        log.info(String.format("Register request {}", request));
+    public ResponseEntity<ApiResponse<User>> register(@Valid @RequestBody RegisterRequest request) {
+        log.debug("Register request {}", request);
+        log.info("Register request {}", request);
         return ResponseEntity.ok(userService.register(request));
     }
 }

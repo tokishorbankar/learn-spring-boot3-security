@@ -14,8 +14,10 @@ spring:
     hibernate:
       ddl-auto: 'create-drop'
     show-sql: true
+    open-in-view: false
 
 application:
   security:
     jwt:
       secret-key: ${JWT_SECRET_KEY}
+

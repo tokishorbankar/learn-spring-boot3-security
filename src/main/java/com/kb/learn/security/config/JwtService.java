@@ -75,6 +75,7 @@ public class JwtService {
 
     private Claims extractAllClaims(final String jwtToken) {
         log.debug("Extracting AllClaims from JWt token {}", jwtToken);
+
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSigningKey())

@@ -26,9 +26,6 @@ public class ValidPasswordValidator implements ConstraintValidator<ValidPassword
         final PasswordValidator validator = new PasswordValidator(rules);
         final RuleResult result = validator.validate(new PasswordData(password));
 
-        if (result.isValid()) {
-            return true;
-        }
-        return false;
+        return result.isValid();
     }
 }

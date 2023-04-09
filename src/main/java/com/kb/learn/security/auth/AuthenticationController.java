@@ -19,8 +19,9 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<ApiResponse> authenticate(@Valid @RequestBody AuthenticationRequest request) {
-        log.info(String.format("Authenticate request {}", request));
+    public ResponseEntity<ApiResponse<String>> authenticate(@Valid @RequestBody AuthenticationRequest request) {
+        log.debug("Authenticate request {}", request);
+        log.info("Authenticate request {}", request);
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 }

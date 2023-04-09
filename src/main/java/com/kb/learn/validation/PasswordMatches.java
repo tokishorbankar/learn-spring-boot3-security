@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface PasswordMatches {
 
-    String message() default "Passwords don't match";
+    String message() default "Password does not match!";
 
     Class<?>[] groups() default {};
 

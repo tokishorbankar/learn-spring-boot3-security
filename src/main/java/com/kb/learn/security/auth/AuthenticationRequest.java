@@ -14,12 +14,12 @@ import lombok.ToString;
 @ToString
 public class AuthenticationRequest {
 
-    @NotEmpty(message = "Email is mandatory")
-    @Email(message = "Email invalid",
+    @NotEmpty(message = "Username(Email) required")
+    @Email(message = "Invalid email",
             regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
 
-    @ValidPassword
-    @NotEmpty(message = "Password is mandatory")
+    @ValidPassword()
+    @NotEmpty(message = "Password required")
     private String password;
 }

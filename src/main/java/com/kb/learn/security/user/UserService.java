@@ -1,5 +1,6 @@
 package com.kb.learn.security.user;
 
+import com.kb.learn.exception.UserAlreadyExistException;
 import com.kb.learn.module.ApiResponse;
 import com.kb.learn.validation.PasswordMatches;
 import jakarta.validation.Valid;
@@ -28,10 +29,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public ApiResponse<User> register(final @Valid RegisterRequest request) {
-        log.debug("register {}", request);
+        log.debug("Register user {}", request);
 
         if (isUserExist(request.getEmail()))
-            throw new RuntimeException(String.format("User %s account is already exists.", request.getEmail()));
+            throw new UserAlreadyExistException(String.format("User %s account is already exists.", request.getEmail()));
 
         var user = User
                 .builder()
