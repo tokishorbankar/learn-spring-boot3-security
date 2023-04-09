@@ -24,22 +24,17 @@ public class User implements UserDetails {
     @GeneratedValue
     private Long id;
 
-
     private String firstname;
-
 
     private String lastname;
 
-
     @Column(unique = true)
     private String email;
-
 
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

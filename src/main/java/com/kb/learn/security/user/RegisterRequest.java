@@ -1,9 +1,9 @@
-package com.kb.learn.security.auth;
+package com.kb.learn.security.user;
 
 import com.kb.learn.validation.PasswordMatches;
 import com.kb.learn.validation.ValidPassword;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,20 +16,22 @@ import lombok.ToString;
 @ToString
 public class RegisterRequest {
 
-    @NotBlank(message = "First name is mandatory")
+    @NotEmpty(message = "First name is mandatory")
     private String firstname;
 
-    @NotBlank(message = "Last name is mandatory")
+    @NotEmpty(message = "Last name is mandatory")
     private String lastname;
 
-    @Email(message = "Email is mandatory")
+    @NotEmpty(message = "Email is mandatory")
+    @Email(message = "Email invalid",
+            regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
 
     @ValidPassword
-    @NotBlank(message = "Password is mandatory")
+    @NotEmpty(message = "Password is mandatory")
     private String password;
 
-    @NotBlank(message = "Confirm Password is mandatory")
+    @NotEmpty(message = "Confirm Password is mandatory")
     private String confirmPassword;
 
     private boolean isAdmin = false;

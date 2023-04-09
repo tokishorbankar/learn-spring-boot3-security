@@ -1,6 +1,6 @@
 package com.kb.learn.exception;
 
-import com.kb.learn.api.module.ApiResponseEntity;
+import com.kb.learn.module.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
@@ -35,67 +35,100 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.PRECONDITION_FAILED, ex.getMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.PRECONDITION_FAILED, ex.getMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
+            HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex, WebRequest request) {
+    public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(
+            SQLIntegrityConstraintViolationException ex, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+    public ResponseEntity<Object> handleDataIntegrityViolationException(
+            DataIntegrityViolationException ex, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleRuntimeException(RuntimeException ex, WebRequest request) {
         log.error(ERROR_MESSAGE, ex);
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+
+        ProblemDetail problemDetail = ProblemDetail
+                .forStatusAndDetail(HttpStatus.EXPECTATION_FAILED, ex.getLocalizedMessage());
+
         problemDetail.setType(URI.create(getRequestedUri(request)));
         addTimestamp(problemDetail);
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(problemDetail).build());
+
+        return ResponseEntity.ok(new ApiResponse<ProblemDetail>(problemDetail));
     }
 
 

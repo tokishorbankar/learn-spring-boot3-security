@@ -1,8 +1,8 @@
 package com.kb.learn.api.controller;
 
 
-import com.kb.learn.api.module.ApiResponseEntity;
-import com.kb.learn.api.module.Student;
+import com.kb.learn.module.ApiResponse;
+import com.kb.learn.module.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,8 +23,7 @@ public class RestAPIController {
             new Student("name2", 2l));
 
     @GetMapping
-    public ResponseEntity<ApiResponseEntity> getStudents() {
-
-        return ResponseEntity.ok(ApiResponseEntity.builder().body(students).build());
+    public ResponseEntity<ApiResponse> getStudents() {
+        return ResponseEntity.ok( new ApiResponse(students));
     }
 }

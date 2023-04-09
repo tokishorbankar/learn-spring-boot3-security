@@ -1,7 +1,7 @@
 package com.kb.learn.validation;
 
 
-import com.kb.learn.security.auth.RegisterRequest;
+import com.kb.learn.security.user.RegisterRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

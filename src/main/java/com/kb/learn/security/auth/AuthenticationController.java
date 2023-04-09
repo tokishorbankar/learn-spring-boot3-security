@@ -1,5 +1,6 @@
 package com.kb.learn.security.auth;
 
+import com.kb.learn.module.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,16 +18,8 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @Valid @RequestBody RegisterRequest request) {
-        log.info(String.format("Register request {}", request));
-        return ResponseEntity.ok(authenticationService.register(request));
-    }
-
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @Valid @RequestBody AuthenticationRequest request) {
+    public ResponseEntity<ApiResponse> authenticate(@Valid @RequestBody AuthenticationRequest request) {
         log.info(String.format("Authenticate request {}", request));
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }

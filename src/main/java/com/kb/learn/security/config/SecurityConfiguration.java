@@ -17,10 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 public class SecurityConfiguration {
 
-    private static final String[] NON_SECURE_URL = {"/api/v1/auth/**", "/actuator/health"};
+    private static final String[] NON_SECURE_URL = {
+           "/actuator/health",
+            "/api/v1/auth/authenticate",
+            "/api/v1/user/register"};
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final String LOGOUT_URL = "/api/v1/auth/logout";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
