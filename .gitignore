@@ -3,6 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 logs/
+HELP.md
 ### STS ###
 .apt_generated
 .classpath
